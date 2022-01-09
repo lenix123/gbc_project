@@ -1,0 +1,31 @@
+.workspace {
+  width: 73%;
+  margin: 16px 18px 16px 0;
+  background: #424242;
+  box-shadow: 0 4px 50px 9px rgba(0, 0, 0, 0.25);
+  border-radius: 15px;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+}
+
+.workspace_light {
+  background: #F0F0F0;
+  box-shadow: 0 4px 50px 9px rgba(0, 0, 0, 0.13);
+}
+
+.workspace__inner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.workspace__content {
+  height: 100%;
+  padding: 40px 0 0 70px;
+  overflow: auto;
+}
+
+/*# sourceMappingURL=Workspace.css.map */

@@ -1,0 +1,99 @@
+.form {
+  padding-bottom: 15px;
+
+  display: flex;
+  justify-content: flex-start;
+}
+
+.form__label {
+  width: 150px;
+
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.form__wrapper {
+  position: relative;
+  width: max-content;
+
+  display: flex;
+  justify-content: flex-start;
+}
+
+.form__number {
+  width: 50px;
+  height: 35px;
+
+  padding-left: 8px;
+  outline: none;
+  border-radius: 6px;
+  border:0;
+  box-shadow:4px 4px 10px rgba(0,0,0,0.06);
+}
+
+.form__color-btn {
+  width: 160px;
+  height: 35px;
+
+  border-radius: 6px;
+  padding: 4px 12px;
+  box-shadow:4px 4px 10px rgba(0,0,0,0.06);
+  background: white;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  outline: none;
+  cursor: pointer;
+
+  color: #686868;
+  font-size: inherit;
+  font-weight: inherit;
+
+  & div {
+    width: 26px;
+    height: 20px;
+
+    border-radius: 6px;
+    margin-right: 8px;
+  }
+
+  & p {
+    font-size: 15px;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+}
+
+.form__color-picker {
+  position: absolute;
+  top: 20px;
+  left: 40px;
+
+  z-index: 100;
+  padding-bottom: 20px;
+}
+
+.form__dropdown {
+  background: white;
+  width: 160px;
+  height: 35px;
+  box-shadow:4px 4px 10px rgba(0,0,0,0.06);
+
+  border-radius: 6px;
+  border: 0;
+  outline: none;
+}
+
+.form__textarea {
+  width: 370px;
+  height: 35px;
+
+  overflow: auto;
+  padding: 7px;
+  outline: none;
+  border-radius: 10px;
+  border:0;
+  box-shadow:4px 4px 10px rgba(0,0,0,0.06);
+}

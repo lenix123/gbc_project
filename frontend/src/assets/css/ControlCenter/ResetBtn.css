@@ -1,0 +1,68 @@
+.reset-btn {
+  position: sticky;
+  top: 0;
+  transform: translateX(12px);
+  height: max-content;
+  background: #c0392b;
+  color: white;
+  font-size: 14px;
+  border-radius: 5px;
+  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.3);
+  transition: all 0.25s cubic-bezier(0.31, -0.105, 0.43, 1.4);
+  display: flex;
+  align-items: center;
+}
+.reset-btn span {
+  position: relative;
+  padding: 10px;
+  transition: all 0.25s cubic-bezier(0.31, -0.105, 0.43, 1.4);
+}
+.reset-btn span:after {
+  content: "";
+  position: absolute;
+  width: 2px;
+  height: 70%;
+  background-color: #a53125;
+  right: -1px;
+  top: 50%;
+  transform: translate(0, -50%);
+}
+.reset-btn:hover {
+  opacity: 0.9;
+}
+.reset-btn:hover span {
+  transform: translateX(-72%);
+  opacity: 0;
+}
+.reset-btn:hover .reset-btn__wrapper {
+  transform: translateX(-29px);
+}
+
+.reset-btn_active {
+  background: #27ae60;
+}
+.reset-btn_active .reset-btn__check-icon {
+  display: initial;
+}
+.reset-btn_active .reset-btn__trash-icon {
+  display: none;
+}
+.reset-btn_active span {
+  transform: translateX(-72%);
+  opacity: 0;
+}
+.reset-btn_active .reset-btn__wrapper {
+  transform: translateX(-29px);
+}
+
+.reset-btn__wrapper {
+  width: 14px;
+  margin: 10px;
+  transition: all 0.25s cubic-bezier(0.31, -0.105, 0.43, 1.4);
+}
+
+.reset-btn__check-icon {
+  display: none;
+}
+
+/*# sourceMappingURL=ResetBtn.css.map */

@@ -1,0 +1,96 @@
+.bankCard {
+    width: 480px;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    letter-spacing: 1px;
+    background: #EFF2EE;
+    color: #333333;
+    border: 0 #F4FD3E solid;
+}
+
+.bankCard__bankLogo {
+    width: 85%;
+    height: 100px;
+    display: flex;
+    font-size: 36px;
+    font-weight: normal;
+    margin: 0;
+    padding: 10px 0 0 0;
+}
+
+.bankCard__bankLogo > p {
+    padding: 0;
+    margin: 0;
+    align-self: center;
+}
+
+.bankCard__img {
+    align-self: center;
+    height: 70%;
+}
+
+.bankCard__number {
+    width: 85%;
+    height: 100px;
+    display: flex;
+}
+
+.bankCard__number__form {
+    height: 42%;
+    width: 100%;
+    align-self: center;
+    font-size: 22px;
+}
+
+.bankCard__lower {
+    height: 100px;
+    width: 85%;
+    padding-top: 20px;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+.bankCard__lower__forms {
+    height: 52%;
+    width: 60%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.bankCard__period {
+    width: 52%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.bankCard__splitter {
+    font-size: 25px;
+}
+
+.bankCard__month, .bankCard__year {
+    width: 55px;
+
+    font-size: 21px;
+}
+
+.bankCard__code {
+    width: 75px;
+
+    font-size: 21px;
+}
+
+.bankCard__brandLogo {
+    width: 22%;
+    /*height: 46px;*/
+    /*margin: 22px auto 0 auto;*/
+}
+
+.bankCard__brandLogo > img {
+    width: 100%;
+}

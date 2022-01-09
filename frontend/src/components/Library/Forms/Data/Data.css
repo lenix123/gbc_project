@@ -1,0 +1,11 @@
+.dataInput {
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+    border: 0;
+}
+
+.dataInput:focus {
+    outline: 3px solid #60AAEC;
+}

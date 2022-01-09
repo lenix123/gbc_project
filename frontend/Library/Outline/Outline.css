@@ -1,0 +1,15 @@
+.outline-btn {
+    padding: 10px 15px;
+    border-radius: 4px;
+    letter-spacing: 1px;
+    font-size: 18px;
+    outline: none;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+    height: min-content;
+    width: max-content;
+}
+
+.outline-btn:active {
+    transform: translateY(2px);
+}

@@ -1,0 +1,9 @@
+.control-center {
+  width: 100%;
+  background: none;
+  border-radius: 0 0 15px 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+/*# sourceMappingURL=ControlCenter.css.map */

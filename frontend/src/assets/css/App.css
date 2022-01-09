@@ -1,0 +1,19 @@
+.app {
+  height: 100vh;
+  background: #686868;
+  display: flex;
+  color: white;
+}
+
+.app_light {
+  background: #D3D3D3;
+  color: #686868;
+}
+
+.app__menu {
+  width: 27%;
+  display: flex;
+  flex-direction: column;
+}
+
+/*# sourceMappingURL=App.css.map */

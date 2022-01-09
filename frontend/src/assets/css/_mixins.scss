@@ -1,0 +1,17 @@
+@mixin box-sizing($property) {
+  -webkit-box-sizing: $property;
+  -moz-box-sizing: $property;
+  box-sizing: $property;
+}
+
+@mixin appearance($property) {
+  -webkit-appearance: $property;
+  -moz-appearance: $property;
+  appearance: $property;
+}
+
+@mixin transition($property) {
+  -webkit-transition: $property;
+  -moz-transition: $property;
+  transition: $property;
+}

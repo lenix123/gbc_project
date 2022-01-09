@@ -1,0 +1,36 @@
+.instruction {
+  display: flex;
+  margin-bottom: 12px;
+}
+
+.instruction__text {
+  width: 100%;
+  margin-right: 10px;
+}
+
+.token-line {
+  display: flex;
+}
+
+.instruction__button {
+  width: 120px;
+  max-height: 48px;
+  border-radius: 5px;
+  background: #EC9360;
+  color: #F0F0F0;
+  transition: background 4s;
+}
+
+.instruction__button:active {
+  background: #FAA472;
+  transition: background 0s;
+}
+
+.highlight {
+  align-items: center;
+  padding: 5px;
+  font-size: 22px;
+  border-radius: 5px;
+}
+
+/*# sourceMappingURL=Instruction.css.map */

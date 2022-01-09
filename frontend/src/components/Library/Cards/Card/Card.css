@@ -1,0 +1,24 @@
+.card {
+    width: 400px;
+    padding-bottom: 5px;
+
+    background: #fff;
+    color: #282C34;
+    border-radius: 10px;
+
+    text-align: center;
+    overflow: hidden;
+    border: 3px solid #DADADA;
+}
+
+.card__img {
+    width: 100%;
+}
+
+.card > p {
+    padding: 2px 2px;
+}
+
+.card__button {
+    margin: 10px 0;
+}

@@ -1,0 +1,24 @@
+.control-menu {
+  position: relative;
+  padding: 20px 45px 5px 45px;
+  overflow-y: scroll;
+  height: 260px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.control-menu__inner {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.control-menu__inner_export {
+  width: max-content;
+}
+
+.control-menu__text {
+  font-weight: 600;
+}
+
+/*# sourceMappingURL=ControlMenu.css.map */

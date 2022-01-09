@@ -1,0 +1,48 @@
+body {
+  margin: 0;
+  line-height: 1.6;
+  font-size: 22px;
+  font-weight: 500;
+  font-family: "Nunito Sans", sans-serif;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 22px;
+  margin: 0 auto;
+}
+
+*,
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+button {
+  padding: 0;
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  color: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+p {
+  margin: 0;
+  color: inherit;
+}
+
+label {
+  font-family: "Nunito Sans", sans-serif;
+}
+
+pre {
+  margin: 0;
+}
+
+/*# sourceMappingURL=index.css.map */

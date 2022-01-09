@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../GBCProject/.idea/GBCProject.iml" filepath="$PROJECT_DIR$/../GBCProject/.idea/GBCProject.iml" />
+      <module fileurl="file://$USER_HOME$/cities/.idea/cities.iml" filepath="$USER_HOME$/cities/.idea/cities.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../pythonProjects/PycharmProjects/pythonProject/diary_site/.idea/diary_site.iml" filepath="$PROJECT_DIR$/../../pythonProjects/PycharmProjects/pythonProject/diary_site/.idea/diary_site.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/gbc.iml" filepath="$PROJECT_DIR$/.idea/gbc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../pythonProjects/PycharmProjects/pythonProject/lil_django/.idea/lil_django.iml" filepath="$PROJECT_DIR$/../../pythonProjects/PycharmProjects/pythonProject/lil_django/.idea/lil_django.iml" />
+      <module fileurl="file://$USER_HOME$/test-shop/.idea/test-shop.iml" filepath="$USER_HOME$/test-shop/.idea/test-shop.iml" />
+    </modules>
+  </component>
+</project>
