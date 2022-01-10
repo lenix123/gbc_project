@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/GBC.iml" filepath="$PROJECT_DIR$/.idea/GBC.iml" />
       <module fileurl="file://$USER_HOME$/programs/pythonProjects/PycharmProjects/pythonProject/diary_site/.idea/diary_site.iml" filepath="$USER_HOME$/programs/pythonProjects/PycharmProjects/pythonProject/diary_site/.idea/diary_site.iml" />
+      <module fileurl="file://$USER_HOME$/programs/pythonProjects/PycharmProjects/pythonProject/lil_django/.idea/lil_django.iml" filepath="$USER_HOME$/programs/pythonProjects/PycharmProjects/pythonProject/lil_django/.idea/lil_django.iml" />
     </modules>
   </component>
 </project>
