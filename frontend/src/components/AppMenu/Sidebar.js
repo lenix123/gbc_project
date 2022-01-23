@@ -1,5 +1,6 @@
-import React, {Component} from 'react'
-import '../../assets/css/App-menu/Sidebar.scss'
+import React, {Component} from 'react';
+import '../../assets/css/App-menu/Sidebar.scss';
+import tree from '../../tree.json';
 import DirBtn from "./DirBtn";
 import userTreeBuilder from "../../utils/userTree";
 
@@ -22,7 +23,7 @@ class Sidebar extends Component {
     render() {
         const userTree = this.state.userTree;
         const isUserTreeEmpty = Object.keys(userTree).length !== 0
-        const userLibrary = isUserTreeEmpty && <DirBtn dirName={"Saved"} userTree={userTree}/>;
+        const userLibrary = isUserTreeEmpty && <DirBtn dirName={"Saved"} tree={userTree}/>;
 
         return (
             <div className="sidebar">
@@ -32,7 +33,7 @@ class Sidebar extends Component {
                         <p className="sidebar__title">LIBRARY</p>
 
                         <div className="sidebar__wrapper">
-                            <DirBtn dirName={"Library"} userTree={{}}/>
+                            <DirBtn dirName={"Library"} tree={tree}/>
                             {userLibrary}
                         </div>
                     </div>

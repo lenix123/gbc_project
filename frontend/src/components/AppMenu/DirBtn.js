@@ -10,13 +10,13 @@ class DirBtn extends React.Component {
     }
 
     render() {
-        const {dirName, userTree} = this.props;
+        const {dirName, tree} = this.props;
         const isActive = this.state.isActive;
         // устанавливаем значки для папки в разных положениях
         const arrowIcon = isActive ? arrowDown : arrowRight;
         const folderIcon = isActive ? folderOpen : folderClose;
         // открываем содержимое папки, если изменили состояние на true
-        const innerTree = isActive && <InnerTree openDir={dirName} userTree={userTree}/>
+        const innerTree = isActive && <InnerTree openDir={dirName} tree={tree}/>
 
         return(
             <div>

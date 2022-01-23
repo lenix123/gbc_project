@@ -1,10 +1,9 @@
-import React, {Component} from 'react'
-import tree from '../../tree.json'
-import '../../assets/css/App-menu/InnerTree.scss'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFolder, faFolderOpen } from "@fortawesome/free-regular-svg-icons"
-import { faCaretRight, faCaretDown, faFileCode } from "@fortawesome/free-solid-svg-icons"
-import FileBtn from "./FileBtn"
+import React, {Component} from 'react';
+import '../../assets/css/App-menu/InnerTree.scss';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFolder, faFolderOpen } from "@fortawesome/free-regular-svg-icons";
+import { faCaretRight, faCaretDown, faFileCode } from "@fortawesome/free-solid-svg-icons";
+import FileBtn from "./FileBtn";
 import DirBtn from "./DirBtn";
 
 // устанавливаем иконки для разных положений кнопок навигации
@@ -18,32 +17,23 @@ const fileIcon = <FontAwesomeIcon className="tree-element__icon tree-element__ic
 class InnerTree extends Component {
 
     render () {
-        const { openDir, userTree } = this.props;
+        const { openDir, tree } = this.props;
         let currentDir, dirsInside;
 
-        if (!Object.keys(userTree).length) {
-            let indexDir;
-
-            // нам передали название папки, которую нужно отобразить,
-            // а нам нужно получить индекс этой папки
-            for (let index = 0; index < tree.length; index++) {
-                if (tree[index].name === openDir) {
-                    indexDir = index;
-                }
+        if (Object.keys(tree).length) {
+            currentDir = tree[openDir];
+            if (currentDir.dirs.isArray) {
+                dirsInside = currentDir.dirs;
+            } else {
+                dirsInside = Array.from(currentDir.dirs);
             }
-
-            currentDir = tree[indexDir];
-            dirsInside = currentDir.dirs;
-        } else {
-            currentDir = userTree[openDir];
-            dirsInside = Array.from(currentDir.dirs);
         }
 
         // выводим все подпапки в нашей папке
         const dirBtn = dirsInside.map((dirName) => (
             <DirBtn key={dirName}
                     dirName={dirName}
-                    userTree={userTree}/>
+                    tree={tree}/>
         ));
 
         // выводим все файлы в нашей папке
