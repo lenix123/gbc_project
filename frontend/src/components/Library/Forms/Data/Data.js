@@ -37,10 +37,6 @@ class Data extends Component {
         const mask = event.target.dataset.mask;
         maskForData(event, mask);
 
-        if (this.props.onChange) {
-            this.props.onChange();
-        }
-
         this.setState({
             value: event.target.value
         })

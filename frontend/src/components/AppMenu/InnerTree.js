@@ -18,23 +18,32 @@ const fileIcon = <FontAwesomeIcon className="tree-element__icon tree-element__ic
 class InnerTree extends Component {
 
     render () {
-        const { openDir } = this.props;
-        let indexDir;
+        const { openDir, userTree } = this.props;
+        let currentDir, dirsInside;
 
-        // нам передали название папки, которую нужно отобразить,
-        // а нам нужно получить индекс этой папки
-        for (let index = 0; index < tree.length; index++) {
-            if (tree[index].name === openDir) {
-               indexDir = index;
+        if (!Object.keys(userTree).length) {
+            let indexDir;
+
+            // нам передали название папки, которую нужно отобразить,
+            // а нам нужно получить индекс этой папки
+            for (let index = 0; index < tree.length; index++) {
+                if (tree[index].name === openDir) {
+                    indexDir = index;
+                }
             }
+
+            currentDir = tree[indexDir];
+            dirsInside = currentDir.dirs;
+        } else {
+            currentDir = userTree[openDir];
+            dirsInside = Array.from(currentDir.dirs);
         }
 
-        const currentDir = tree[indexDir];
-
         // выводим все подпапки в нашей папке
-        const dirBtn = currentDir.dirs.map((dirName) => (
+        const dirBtn = dirsInside.map((dirName) => (
             <DirBtn key={dirName}
-                    dirName={dirName}/>
+                    dirName={dirName}
+                    userTree={userTree}/>
         ));
 
         // выводим все файлы в нашей папке

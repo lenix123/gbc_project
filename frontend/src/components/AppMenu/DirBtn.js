@@ -10,12 +10,13 @@ class DirBtn extends React.Component {
     }
 
     render() {
-        const {dirName} = this.props;
+        const {dirName, userTree} = this.props;
+        const isActive = this.state.isActive;
         // устанавливаем значки для папки в разных положениях
-        const arrowIcon = this.isActive() ? arrowDown : arrowRight;
-        const folderIcon = this.isActive() ? folderOpen : folderClose;
+        const arrowIcon = isActive ? arrowDown : arrowRight;
+        const folderIcon = isActive ? folderOpen : folderClose;
         // открываем содержимое папки, если изменили состояние на true
-        const innerTree = this.isActive() && <InnerTree openDir={dirName}/>
+        const innerTree = isActive && <InnerTree openDir={dirName} userTree={userTree}/>
 
         return(
             <div>
@@ -32,11 +33,8 @@ class DirBtn extends React.Component {
     }
     goDown = () => {
         // по нажатию на кнопку изменяем состояние на противоположное
-        this.setState((state) => ({ isActive: !state.isActive }))
-    }
-
-    isActive = () => {
-        return this.state.isActive;
+        const prevIsActive = this.state.isActive;
+        this.setState({ isActive: !prevIsActive })
     }
 }
 

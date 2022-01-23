@@ -58,13 +58,13 @@
 
 .bankCard__lower__forms {
     height: 52%;
-    width: 60%;
+    width: 100%;
     display: flex;
     justify-content: space-between;
 }
 
 .bankCard__period {
-    width: 52%;
+    width: 32%;
     display: flex;
     justify-content: space-between;
 }

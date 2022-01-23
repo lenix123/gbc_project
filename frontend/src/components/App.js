@@ -1,45 +1,54 @@
-import React, { Component } from 'react'
-import '../assets/css/App.scss'
-import Sidebar from "./AppMenu/Sidebar"
+import React, { useState, useEffect } from "react";
+import '../assets/css/App.scss';
+import Sidebar from "./AppMenu/Sidebar";
 import Header from "./AppMenu/Header";
 import ThemeContext from "./ThemeControl/ThemeContext";
 import Workspace from "./Workspace";
-import {Provider} from "react-redux";
-import {createStore} from "redux";
-import rootReducer from "../store/reducers";
+import {connect} from "react-redux";
+import axios from "axios";
+import {setAppTheme} from "../store/appTheme/actions";
 
 
-const store = createStore(rootReducer);
+
+
 // Компонент App несет в себе функцию отображения всего приложения в целом
-class App extends Component {
-    state = {
-        theme: 'light',
-    }
+function App(props) {
+    const {theme, setAppTheme} = props;
 
-    render() {
-        return (
-            // Provider позволяет дочерним компонентам подписаться на изменения UI-темы,
-            // передавая в качестве пропсов значение темы (theme) и колбэк toggleTheme
-            <Provider store={store}>
-                <ThemeContext.Provider value={ { theme: this.state.theme, toggleTheme: this.toggleTheme } }>
-                    <main className={`app app_${this.state.theme}`}>
-                        <section className="app__menu">
-                            <Header />
-                            <Sidebar />
-                        </section>
-                        <Workspace />
-                    </main>
-                </ThemeContext.Provider>
-            </Provider>
-        );
-    }
+    const [userComponents, setUserComponents] = useState([]);
 
-    // функция toggleTheme устанавливает тему оформления приложения
-    toggleTheme = () => {
-        this.setState({
-            theme: this.state.theme === 'light' ? 'dark' : 'light',
-        });
+    useEffect(() => {
+        axios({
+            method: "GET",
+            url: "http://127.0.0.1:8000/api/"
+        }).then(response => {
+            const userComponents = response.data
+            setUserComponents(userComponents)
+        })
+    }, [setUserComponents])
+
+
+    return (
+        <ThemeContext.Provider value={ { theme: theme, toggleTheme: setAppTheme } }>
+            <main className={`app app_${theme}`}>
+                <section className="app__menu">
+                    <Header />
+                    <Sidebar userComponents={userComponents}/>
+                </section>
+                <Workspace />
+            </main>
+        </ThemeContext.Provider>
+    );
+}
+
+const mapStateToProps = (state) => {
+    return {
+        theme: state.appTheme.theme,
     }
 }
 
-export default App;
+const mapDispatchToProps = {
+    setAppTheme
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
