@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {setComponentState} from "../../../../../store/libraryState/actions";
 import {connect} from "react-redux";
+import {setUserComponentStyle} from "../../../../../store/userLibrary/actions";
 
 // форма - выпадающий список
 class DropdownForm extends Component {
@@ -12,15 +13,24 @@ class DropdownForm extends Component {
     // метод жизненного цикла, позволяющий сбросить значение формы,
     // а также синхронизировать состояние формы со стилем компонента
     static getDerivedStateFromProps(props, state) {
-        const {componentsState, componentName, styleType} = props;
-        const componentStyle = componentsState[componentName];
+        const {styleType, isUserComponent, componentName, userComponentName} = props;
+
+        let componentStates, componentStyles;
+
+        if (isUserComponent) {
+            componentStates = props.userLibrary;
+            componentStyles = componentStates && componentStates[userComponentName];
+        } else {
+            componentStates = props.componentsStates;
+            componentStyles = componentStates && componentStates[componentName];
+        }
 
         // если стили были сброшены вручную (resetStyles), то форма примет значения по умолчанию
-        if (componentStyle[styleType] === '' && state.value !== 'Regular') {
+        if (componentStyles[styleType] === '' && state.value !== 'Regular') {
             return { value: 'Regular' }
         // синхронизация значения формы и стиля компонента
-        } else if (componentStyle[styleType] !== state.value && componentStyle[styleType] !== '') {
-            return { value: componentStyle[styleType] }
+        } else if (componentStyles[styleType] !== state.value && componentStyles[styleType] !== '') {
+            return { value: componentStyles[styleType] }
         }
 
         // в ином случае оставить без изменений
@@ -51,11 +61,17 @@ class DropdownForm extends Component {
 
     // метод передает изменения с помощью функции-колбэка
     handleChange = (event) => {
-        const {setComponentState, componentName, styleType} = this.props;
-        setComponentState(componentName, styleType, event.target.value);
+        const {setComponentState, setUserComponentStyle, styleType, componentName, isUserComponent, userComponentName} = this.props;
+        const value = event.target.value;
+
+        if (isUserComponent) {
+            setUserComponentStyle(userComponentName, styleType, value);
+        } else {
+            setComponentState(componentName, styleType, value);
+        }
 
         this.setState({
-            value: event.target.value
+            value: value,
         })
     }
 }
@@ -63,12 +79,16 @@ class DropdownForm extends Component {
 const mapStateToProps = (state) => {
     return {
         componentName: state.currentComponent.componentName,
-        componentsState: state.libraryState
+        componentsStates: state.libraryState,
+        isUserComponent: state.currentComponent.isUserComponent,
+        userComponentName: state.currentComponent.userComponentName,
+        userLibrary: state.userLibrary,
     }
 }
 
 const mapDispatchToProps = {
-    setComponentState
+    setComponentState,
+    setUserComponentStyle,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(DropdownForm);

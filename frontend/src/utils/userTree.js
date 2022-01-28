@@ -21,7 +21,7 @@ export default function userTreeBuilder(userComponents) {
         if (!userTree[type].dirs.has(prototype)) {
             userTree[type].dirs.add(prototype);
 
-            userTree[prototype] = {dirs: [], files: new Array(userComponentName)};
+            userTree[prototype] = {dirs: new Set(), files: new Array(userComponentName+".js")};
         } else {
             userTree[prototype].files.push(userComponentName);
         }

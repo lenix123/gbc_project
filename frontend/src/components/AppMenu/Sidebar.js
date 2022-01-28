@@ -12,7 +12,7 @@ class Sidebar extends Component {
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         const userComponents = this.props.userComponents;
-        if (this.props !== prevProps && Object.keys(userComponents).length) {
+        if (this.props !== prevProps && userComponents.length) {
             const userTree = userTreeBuilder(userComponents);
             this.setState({
                 userTree: userTree,
@@ -22,7 +22,7 @@ class Sidebar extends Component {
 
     render() {
         const userTree = this.state.userTree;
-        const isUserTreeEmpty = Object.keys(userTree).length !== 0
+        const isUserTreeEmpty = Object.keys(userTree).length !== 0;
         const userLibrary = isUserTreeEmpty && <DirBtn dirName={"Saved"} tree={userTree}/>;
 
         return (

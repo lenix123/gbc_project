@@ -5,10 +5,19 @@ import {connect} from "react-redux";
 
 class Classic extends Component {
     render() {
-        const {componentsState} = this.props;
-        const componentStyle = componentsState && componentsState["Classic"];
-        const text = componentStyle.text || "Scooby Doo";
-        const styleReader = new StyleReader(componentStyle);
+        const {isUserComponent, userComponentName} = this.props;
+        let componentStates, componentStyles;
+
+        if (isUserComponent) {
+            componentStates = this.props.userLibrary;
+            componentStyles = componentStates && componentStates[userComponentName];
+        } else {
+            componentStates = this.props.componentsStates;
+            componentStyles = componentStates && componentStates.Classic;
+        }
+
+        const text = componentStyles.text || "Scooby Doo";
+        const styleReader = new StyleReader(componentStyles);
 
         return (
             <button className={this.props.className + " classic-btn"}
@@ -26,7 +35,10 @@ class Classic extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        componentsState: state.libraryState
+        componentsStates: state.libraryState,
+        isUserComponent: state.currentComponent.isUserComponent,
+        userComponentName: state.currentComponent.userComponentName,
+        userLibrary: state.userLibrary,
     }
 }
 

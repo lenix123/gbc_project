@@ -1,4 +1,4 @@
-import {COMPONENT_CHANGE_STATE, COMPONENT_RESET_STYLES} from "./actions";
+import {CHANGE_COMPONENT_STATE, RESET_COMPONENT_STYLES} from "./actions";
 
 const defaultState = {
     "Classic": { text: '', fs: '', bg: '', cl: '', fw: '', br: '' },
@@ -16,7 +16,7 @@ const defaultState = {
 
 export const libraryStateReducer = (state = defaultState, action) => {
     switch (action.type) {
-        case COMPONENT_CHANGE_STATE:
+        case CHANGE_COMPONENT_STATE:
 
             const {componentName, styleTypeToChange, styleValue} = action.payload;
             const updatedStyles = state[componentName];
@@ -27,7 +27,7 @@ export const libraryStateReducer = (state = defaultState, action) => {
                 [componentName]: updatedStyles
             }
 
-        case COMPONENT_RESET_STYLES:
+        case RESET_COMPONENT_STYLES:
             const componentToReset = action.payload;
             const resetStyles = state[componentToReset];
             const properties =  Object.keys(resetStyles);

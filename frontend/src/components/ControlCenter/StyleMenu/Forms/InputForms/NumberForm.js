@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {setComponentState} from "../../../../../store/libraryState/actions";
 import {connect} from "react-redux";
+import {setUserComponentStyle} from "../../../../../store/userLibrary/actions";
 
 class NumberForm extends Component {
     state = {
@@ -9,12 +10,21 @@ class NumberForm extends Component {
 
     // метод жизненного цикла, позволяющий синхронизировать состояние формы со стилем компонента
     static getDerivedStateFromProps(props, state) {
-        const {componentsState, componentName, styleType} = props;
-        const componentStyle = componentsState[componentName];
+        const {styleType, isUserComponent, componentName, userComponentName} = props;
+
+        let componentStates, componentStyles;
+
+        if (isUserComponent) {
+            componentStates = props.userLibrary;
+            componentStyles = componentStates && componentStates[userComponentName];
+        } else {
+            componentStates = props.componentsStates;
+            componentStyles = componentStates && componentStates[componentName];
+        }
 
         // синхронизация значения формы и стиля компонента
-        if (componentStyle[styleType] !== state.value) {
-            return { value: componentStyle[styleType] }
+        if (componentStyles[styleType] !== state.value) {
+            return { value: componentStyles[styleType] }
         }
 
         // в ином случае оставить без изменений
@@ -49,25 +59,34 @@ class NumberForm extends Component {
 
     // метод передает изменения с помощью функции-колбэка
     handleChange = (event) => {
-        const {setComponentState, componentName, styleType} = this.props;
+        const {setComponentState, setUserComponentStyle, styleType, componentName, isUserComponent, userComponentName} = this.props;
         const value = event.target.value;
-        setComponentState(componentName, styleType, value);
+
+        if (isUserComponent) {
+            setUserComponentStyle(userComponentName, styleType, value);
+        } else {
+            setComponentState(componentName, styleType, value);
+        }
 
         this.setState({
             value: value,
-        });
+        })
     }
 }
 
 const mapStateToProps = (state) => {
     return {
         componentName: state.currentComponent.componentName,
-        componentsState: state.libraryState
+        componentsStates: state.libraryState,
+        isUserComponent: state.currentComponent.isUserComponent,
+        userComponentName: state.currentComponent.userComponentName,
+        userLibrary: state.userLibrary,
     }
 }
 
 const mapDispatchToProps = {
-    setComponentState
+    setComponentState,
+    setUserComponentStyle,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(NumberForm);

@@ -12,9 +12,19 @@ class FileBtn extends Component {
     // метод, вызывающийся перед рендером компонента
     // метод позволяет отследить изменение фокуса на компоненте
     static getDerivedStateFromProps(props, state) {
-        const { componentName, file } = props;
+        const { componentName, file, isUserFile, currentUserComponent } = props;
         const fileName = file.slice(0, -3);
-        const isEqual = componentName === fileName;
+        let isEqual;
+
+        if (isUserFile) {
+            isEqual = fileName === currentUserComponent;
+        } else {
+            if (currentUserComponent) {
+                isEqual = false;
+            } else {
+                isEqual = fileName === componentName
+            }
+        }
 
         // если кнопка в фокусе,
         // но ее название не совпадает с названием прожатой в данный момент кнопки,
@@ -47,9 +57,14 @@ class FileBtn extends Component {
 
     // метод вызывает колбэк, отображающий компонент или прячущий его
     displayComponent = () => {
-        const { setComponentName, file } = this.props;
+        const { setComponentName, file, isUserFile, dir } = this.props;
         const fileName = file.slice(0, -3);
-        setComponentName(fileName);
+
+        if (isUserFile) {
+            setComponentName(dir, isUserFile, fileName)
+        } else {
+            setComponentName(fileName, isUserFile, "");
+        }
 
         // присвоить компоненту фокус, если он отображается, и наоборот
         this.setState({
@@ -71,7 +86,8 @@ class FileBtn extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        componentName: state.currentComponent.componentName
+        componentName: state.currentComponent.componentName,
+        currentUserComponent: state.currentComponent.userComponentName,
     }
 }
 

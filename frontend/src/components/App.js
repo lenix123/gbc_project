@@ -7,13 +7,14 @@ import Workspace from "./Workspace";
 import {connect} from "react-redux";
 import axios from "axios";
 import {setAppTheme} from "../store/appTheme/actions";
+import {setUserLibrary} from "../store/userLibrary/actions";
 
 
 
 
 // Компонент App несет в себе функцию отображения всего приложения в целом
 function App(props) {
-    const {theme, setAppTheme} = props;
+    const {theme, setAppTheme, setUserLibrary} = props;
 
     const [userComponents, setUserComponents] = useState([]);
 
@@ -22,8 +23,9 @@ function App(props) {
             method: "GET",
             url: "http://127.0.0.1:8000/api/"
         }).then(response => {
-            const userComponents = response.data
-            setUserComponents(userComponents)
+            const userComponents = response.data;
+            setUserLibrary(userComponents);
+            setUserComponents(userComponents);
         })
     }, [setUserComponents])
 
@@ -35,7 +37,7 @@ function App(props) {
                     <Header />
                     <Sidebar userComponents={userComponents}/>
                 </section>
-                <Workspace />
+                <Workspace userComponents={userComponents}/>
             </main>
         </ThemeContext.Provider>
     );
@@ -48,7 +50,8 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-    setAppTheme
+    setAppTheme,
+    setUserLibrary
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

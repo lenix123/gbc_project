@@ -11,6 +11,7 @@ import {connect} from "react-redux";
 class Workspace extends React.Component {
     render() {
         const {componentName} = this.props;
+
         const themeContext = this.context.theme;
         // исходя из переданного пропсом имени выбирается текущий компонент для отображения
         const Component = components[componentName];

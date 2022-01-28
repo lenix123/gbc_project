@@ -1,7 +1,9 @@
 import { SHOW_NEW_COMPONENT } from "./actions";
 
 const defaultState = {
-    componentName: ""
+    componentName: "",
+    isUserComponent: false,
+    userComponentName: "",
 };
 
 export const currentComponentReducer = (state = defaultState, action) => {
@@ -9,17 +11,21 @@ export const currentComponentReducer = (state = defaultState, action) => {
         case SHOW_NEW_COMPONENT:
             // если пользователь вызывает компонент, который уже отображается,
             // значит этот компанент больше не нужно отображать
-            if (action.payload === state.componentName) {
+            if (action.payload.componentName === state.componentName && action.payload.userComponentName === state.userComponentName) {
                 return {
                     ...state,
-                    componentName: ""
+                    componentName: "",
+                    isUserComponent: action.payload.isUserComponent,
+                    userComponentName: ""
                 }
             } else {
                 // если пользователь вызывает новый компонент из библиотеки,
                 // то его нужно отобразить
                 return {
                     ...state,
-                    componentName: action.payload
+                    componentName: action.payload.componentName,
+                    isUserComponent: action.payload.isUserComponent,
+                    userComponentName: action.payload.userComponentName
                 }
             }
         default:

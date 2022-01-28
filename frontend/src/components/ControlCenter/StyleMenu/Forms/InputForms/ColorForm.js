@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {ChromePicker} from "react-color";
 import {setComponentState} from "../../../../../store/libraryState/actions";
 import {connect} from "react-redux";
+import {setUserComponentStyle} from "../../../../../store/userLibrary/actions";
 
 // форма выбора цвета
 class ColorForm extends Component {
@@ -33,11 +34,20 @@ class ColorForm extends Component {
     // метод жизненного цикла, позволяющий сбросить значение формы,
     // а также синхронизировать состояние формы со стилем компонента
     static getDerivedStateFromProps(props, state) {
-        const {componentsState, componentName, styleType} = props;
-        const componentStyle = componentsState[componentName];
+        const {styleType, isUserComponent, componentName, userComponentName} = props;
+
+        let componentStates, componentStyles;
+
+        if (isUserComponent) {
+            componentStates = props.userLibrary;
+            componentStyles = componentStates && componentStates[userComponentName];
+        } else {
+            componentStates = props.componentsStates;
+            componentStyles = componentStates && componentStates[componentName];
+        }
 
         // если стили были сброшены вручную (resetStyles), то форма примет значения по умолчанию,
-        if (componentStyle[styleType] === '' &&
+        if (componentStyles[styleType] === '' &&
             state.color !== '#ec9360' &&
             !state.isOpen
            ) {
@@ -46,10 +56,10 @@ class ColorForm extends Component {
                 color: '#ec9360',
             }
         // синхронизация значения формы и стиля компонента
-        } else if (componentStyle[styleType] !== state.color && componentStyle[styleType] !== '') {
+        } else if (componentStyles[styleType] !== state.color && componentStyles[styleType] !== '') {
             return {
                 isOpen: state.isOpen,
-                color: componentStyle[styleType]
+                color: componentStyles[styleType]
             }
         }
 
@@ -99,11 +109,17 @@ class ColorForm extends Component {
 
     // обрабатывает изменение цвета и с помощью колбэка передает эти изменения
     handleChange = (color) => {
-        const {setComponentState, componentName, styleType} = this.props;
-        setComponentState(componentName, styleType, color.hex);
+        const {setComponentState, setUserComponentStyle, styleType, componentName, isUserComponent, userComponentName} = this.props;
+        const value = color.hex;
+
+        if (isUserComponent) {
+            setUserComponentStyle(userComponentName, styleType, value);
+        } else {
+            setComponentState(componentName, styleType, value);
+        }
 
         this.setState({
-            color: color.hex
+            value: value,
         })
     }
 
@@ -115,12 +131,16 @@ class ColorForm extends Component {
 const mapStateToProps = (state) => {
     return {
         componentName: state.currentComponent.componentName,
-        componentsState: state.libraryState
+        componentsStates: state.libraryState,
+        isUserComponent: state.currentComponent.isUserComponent,
+        userComponentName: state.currentComponent.userComponentName,
+        userLibrary: state.userLibrary,
     }
 }
 
 const mapDispatchToProps = {
-    setComponentState
+    setComponentState,
+    setUserComponentStyle,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ColorForm);

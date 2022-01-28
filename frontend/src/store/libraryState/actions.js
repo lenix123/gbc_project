@@ -1,8 +1,8 @@
-export const COMPONENT_CHANGE_STATE = "COMPONENT_CHANGE_STATE";
-export const COMPONENT_RESET_STYLES = "COMPONENT_RESET_STYLES";
+export const CHANGE_COMPONENT_STATE = "CHANGE_COMPONENT_STATE";
+export const RESET_COMPONENT_STYLES = "RESET_COMPONENT_STYLES";
 
 export const setComponentState = (componentName, styleTypeToChange, styleValue) => ({
-    type: COMPONENT_CHANGE_STATE,
+    type: CHANGE_COMPONENT_STATE,
     payload: {
         componentName,
         styleTypeToChange,
@@ -11,6 +11,6 @@ export const setComponentState = (componentName, styleTypeToChange, styleValue) 
 });
 
 export const resetComponentStyles = (componentName) => ({
-    type: COMPONENT_RESET_STYLES,
+    type: RESET_COMPONENT_STYLES,
     payload: componentName
 })

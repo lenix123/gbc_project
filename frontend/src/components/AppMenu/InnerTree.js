@@ -19,13 +19,16 @@ class InnerTree extends Component {
     render () {
         const { openDir, tree } = this.props;
         let currentDir, dirsInside;
+        let isUserComponent = false;
 
         if (Object.keys(tree).length) {
             currentDir = tree[openDir];
-            if (currentDir.dirs.isArray) {
+
+            if (Array.isArray(currentDir.dirs)) {
                 dirsInside = currentDir.dirs;
             } else {
                 dirsInside = Array.from(currentDir.dirs);
+                isUserComponent = true;
             }
         }
 
@@ -39,7 +42,9 @@ class InnerTree extends Component {
         // выводим все файлы в нашей папке
         const fileBtn = currentDir.files.map((file) => (
             <FileBtn key={file}
-                     file={file}/>
+                     file={file}
+                     isUserFile={isUserComponent}
+                     dir={openDir}/>
         ));
 
         return (
