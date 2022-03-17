@@ -3,8 +3,12 @@ from user_components.models import UserComponent
 
 
 class UserComponentsSerializer(serializers.ModelSerializer):
-    user = serializers.SlugRelatedField(slug_field="username", read_only=True)
-
     class Meta:
         model = UserComponent
-        fields = ("pk", "user", "type", "prototype", "component_name", "params")
+        fields = ("pk", "type", "prototype", "component_name", "params")
+
+
+class CreateUserComponent(serializers.ModelSerializer):
+    class Meta:
+        model = UserComponent
+        fields = ("type", "prototype", "component_name", "params")

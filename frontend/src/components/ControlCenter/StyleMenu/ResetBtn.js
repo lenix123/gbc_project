@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import '../../../assets/css/ControlCenter/ResetBtn.scss'
-import { faTrashAlt, faCheck } from "@fortawesome/free-solid-svg-icons"
+import '../../../assets/css/ControlCenter/ResetBtn.scss';
+import { faTrashAlt, faCheck } from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {resetComponentStyles} from "../../../store/libraryState/actions";
 import {resetUserComponentStyles} from "../../../store/userLibrary/actions";

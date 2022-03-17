@@ -1,8 +1,7 @@
 .login__group {
     position: relative;
-    margin-bottom: 30px;
-    min-width: 250px;
-    width: max-content;
+    margin-bottom: 32px;
+    width: 100%;
 }
 
 .login__input {
@@ -32,9 +31,23 @@
     border-bottom: 1px solid #1a73a8;
 }
 
+.login__input_error {
+    border-color: #ff4c64;
+}
+
+.login__input_error:focus {
+    border-color: #ff4c64;
+}
+
+.auth_error_text {
+    color: #ff4c64;
+    font-size: 14px;
+    position: initial;
+}
+
 .login__input:focus ~ .login__label,
 .login__label_filled {
-    top: -55%;
+    top: -20px;
     font-size: 16px;
     color: #909090;
 }

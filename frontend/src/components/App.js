@@ -1,20 +1,19 @@
 import React, { useState, useEffect } from "react";
 import '../assets/css/App.scss';
-import Sidebar from "./AppMenu/Sidebar";
-import Header from "./AppMenu/Header";
+import Sidebar from "./Sidebar/Sidebar";
+import Header from "./Header/Header";
 import ThemeContext from "./ThemeControl/ThemeContext";
 import Workspace from "./Workspace";
 import {connect} from "react-redux";
 import axios from "axios";
 import {setAppTheme} from "../store/appTheme/actions";
 import {setUserLibrary} from "../store/userLibrary/actions";
-
-
+import {authCheckState} from "../store/auth/actions";
 
 
 // Компонент App несет в себе функцию отображения всего приложения в целом
 function App(props) {
-    const {theme, setAppTheme, setUserLibrary} = props;
+    const {theme, setAppTheme, setUserLibrary, isAuthenticated} = props;
 
     const [userComponents, setUserComponents] = useState([]);
 
@@ -29,15 +28,14 @@ function App(props) {
         })
     }, [setUserComponents])
 
-
     return (
         <ThemeContext.Provider value={ { theme: theme, toggleTheme: setAppTheme } }>
             <main className={`app app_${theme}`}>
                 <section className="app__menu">
-                    <Header />
-                    <Sidebar userComponents={userComponents}/>
+                    <Header isAuthenticated={isAuthenticated} theme={theme}/>
+                    <Sidebar userComponents={userComponents} isAuthenticated={isAuthenticated}/>
                 </section>
-                <Workspace userComponents={userComponents}/>
+                <Workspace/>
             </main>
         </ThemeContext.Provider>
     );
@@ -46,12 +44,14 @@ function App(props) {
 const mapStateToProps = (state) => {
     return {
         theme: state.appTheme.theme,
+        isAuthenticated: state.auth.token !== null
     }
 }
 
 const mapDispatchToProps = {
     setAppTheme,
-    setUserLibrary
+    setUserLibrary,
+    authCheckState,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

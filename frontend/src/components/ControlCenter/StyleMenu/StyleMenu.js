@@ -3,6 +3,7 @@ import '../../../assets/css/ControlCenter/InputForms.scss';
 import FormTemplate from './Forms/FormTemplate';
 import ResetBtn from "./ResetBtn";
 import {connect} from "react-redux";
+import CreateBtn from "./CreateBtn";
 
 // StyleMenu отвечает за меню стилевых форм
 class StyleMenu extends Component {
@@ -26,7 +27,10 @@ class StyleMenu extends Component {
                 <div className="control-menu__inner">
                     {formsList}
                 </div>
-                <ResetBtn/>
+                <div>
+                    <ResetBtn/>
+                    <CreateBtn/>
+                </div>
             </div>
         )
     }

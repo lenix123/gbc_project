@@ -1,8 +1,9 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .serializers import UserComponentsSerializer
+from .serializers import UserComponentsSerializer, CreateUserComponent
 from ..models import UserComponent
 from rest_framework import status
+from django.contrib.auth.models import User
 
 
 class UserComponentList(APIView):
@@ -13,7 +14,7 @@ class UserComponentList(APIView):
         return Response(serializer.data)
 
     def post(self, request):
-        serializer = UserComponentsSerializer(data=request.data)
+        serializer = CreateUserComponent(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)

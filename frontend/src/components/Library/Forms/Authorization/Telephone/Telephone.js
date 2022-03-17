@@ -23,7 +23,7 @@ class Telephone extends Component {
         }
 
         const styleReader = new StyleReader(componentStyle);
-        const label = componentStyle.text || "Telephone";
+        const label = this.props.children || componentStyle.text || "Telephone";
 
         return (
             <form className={styleReader.userClassName + "login__group"}>

@@ -6,30 +6,36 @@ import {connect} from "react-redux";
 class Classic extends Component {
     render() {
         const {isUserComponent, userComponentName} = this.props;
-        let componentStates, componentStyles;
 
-        if (isUserComponent) {
-            componentStates = this.props.userLibrary;
-            componentStyles = componentStates && componentStates[userComponentName];
+        let text, style;
+
+        if (this.props.isMute) {
+            text = this.props.children || "Submit";
+            style = {};
         } else {
-            componentStates = this.props.componentsStates;
-            componentStyles = componentStates && componentStates.Classic;
-        }
+            let componentStates, componentStyles;
 
-        const text = componentStyles.text || "Scooby Doo";
-        const styleReader = new StyleReader(componentStyles);
+            if (isUserComponent) {
+                componentStates = this.props.userLibrary;
+                componentStyles = componentStates && componentStates[userComponentName];
+            } else {
+                componentStates = this.props.componentsStates;
+                componentStyles = componentStates && componentStates.Classic;
+            }
+
+            text = componentStyles.text || "Scooby Doo";
+
+            const styleReader = new StyleReader(componentStyles);
+            style = styleReader.style;
+        }
 
         return (
             <button className={this.props.className + " classic-btn"}
-                    style={styleReader.style}
-                    onClick={ e => this.handleClick(e) }>
+                    style={style}
+                    onSubmit={this.props.onSubmit}>
                 {text}
             </button>
         )
-    }
-
-    handleClick(e) {
-        e.preventDefault();
     }
 }
 
