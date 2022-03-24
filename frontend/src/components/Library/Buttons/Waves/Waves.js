@@ -1,18 +1,19 @@
 import React, {Component} from 'react';
-import "./Waves.css"
+import "./Waves.css";
 import StyleReader from "../../../../utils/StyleReader";
-import {connect} from "react-redux";
+
 
 class Waves extends Component {
     render() {
-        const {componentsState} = this.props;
-        const componentStyle = componentsState && componentsState["Waves"];
-        let text = componentStyle.text || "Scooby Doo";
-        let styleReader = new StyleReader(componentStyle);
+        const {componentStyles} = this.props;
+        const text = componentStyles.text || "Scooby Doo";
+
+        const styleReader = new StyleReader(componentStyles);
+        const style = styleReader.style;
 
         return (
             <button className={this.props.className + " buttonWaves"}
-                    style={styleReader.style}
+                    style={style}
                     onClick={ e => this.handleClick(e) }>
                 <p>{text}</p>
                 <span className={"buttonWaves__inner"}>
@@ -30,10 +31,4 @@ class Waves extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        componentsState: state.libraryState
-    }
-}
-
-export default connect(mapStateToProps)(Waves);
+export default Waves;

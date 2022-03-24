@@ -1,9 +1,10 @@
-import { SHOW_NEW_COMPONENT } from "./actions";
+import { SHOW_NEW_COMPONENT, SET_USER_COMPONENTS } from "./actions";
 
 const defaultState = {
     componentName: "",
     isUserComponent: false,
     userComponentName: "",
+    userComponents: [],
 };
 
 export const currentComponentReducer = (state = defaultState, action) => {
@@ -27,6 +28,11 @@ export const currentComponentReducer = (state = defaultState, action) => {
                     isUserComponent: action.payload.isUserComponent,
                     userComponentName: action.payload.userComponentName
                 }
+            }
+        case SET_USER_COMPONENTS:
+            return {
+                ...state,
+                userComponents: action.payload
             }
         default:
             return state;

@@ -1,3 +1,24 @@
 .create_button {
-  background: #2aabd2;
+  position: sticky;
+  top: 50px;
+  padding: 8px 16px;
+
+  border: none;
+  border-radius: 4px;
+  letter-spacing: 1px;
+  font-size: 18px;
+  color: #fff;
+  background-color: #0071f0;
+  outline: none;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.3);
+}
+
+.create_button:hover {
+  color: #E4D0BB;
+}
+
+.create_button:active {
+  transform: translateY(2px);
 }

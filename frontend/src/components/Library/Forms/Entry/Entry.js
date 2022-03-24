@@ -2,52 +2,61 @@ import React, {Component} from "react";
 import "./Entry.css"
 import StyleReader from "../../../../utils/StyleReader";
 import * as components from "../../../../utils/Hub";
-import {connect} from "react-redux";
+
 
 class Entry extends Component {
     render() {
-        const {componentsState} = this.props;
-        const componentStyle = componentsState && componentsState["Entry"];
-        const formType = componentStyle.type || "Email";
-        const Authorization = components[formType];
+        const {componentStyles, isUserComponent, componentsState} = this.props;
         const Password = components["Password"];
 
-        const styleReader = new StyleReader(componentStyle);
-        const entryName = componentStyle.text || "Sign in";
+        const styleReader = new StyleReader(componentStyles);
+        const style = styleReader.style;
+        const entryName = componentStyles.text || "Sign in";
 
-        const buttonName = componentStyle.btn || "Classic";
-        const buttonText = componentsState[buttonName].text;
-        const Button = components[buttonName];
+        let Button, btnStyles;
+        if (isUserComponent && componentStyles.btn === "Initial") {
+            Button = components[componentStyles.initialBtn];
+            btnStyles = componentStyles["btnStyle"];
+        } else {
+            const buttonName = componentStyles.btn || 'Classic';
+            Button = components[buttonName];
+            btnStyles = componentsState[buttonName];
+        }
 
-        const sync = componentStyle.sync || "None";
-        let componentWithSync;
+        let Login, loginFormStyles, passFormStyles, loginType;
+        if (isUserComponent && componentStyles.type === "Initial") {
+            loginType = componentStyles.initialLogin;
+            Login = components[loginType];
+            loginFormStyles = componentStyles.loginStyle;
+            passFormStyles = componentStyles.passStyle;
+        } else {
+            loginType = componentStyles.type || "Email";
+            Login = components[loginType];
+            loginFormStyles = componentsState[loginType];
+            if (isUserComponent) {
+                passFormStyles = componentStyles.passStyle;
+            } else {
+                passFormStyles = componentsState["Password"];
+            }
+        }
 
+        const sync = componentStyles.sync;
         if (sync === "Login") {
-            componentWithSync = formType;
+            passFormStyles = loginFormStyles;
         } else if (sync === "Pass") {
-            componentWithSync = "Password";
+            loginFormStyles = passFormStyles;
         }
 
         return (
-            <div className={styleReader.userClassName + " entry"}
-                  style={styleReader.style}>
+            <div className={"entry"}
+                  style={style}>
                 <h1 className={"entry__title"}>{entryName}</h1>
-                <Authorization componentsState={componentsState}
-                               componentWithSync={componentWithSync}/>
-                <Password componentsState={componentsState}
-                          componentWithSync={componentWithSync}/>
-                <Button componentsState={componentsState}>
-                    {buttonText}
-                </Button>
+                <Login componentStyles={loginFormStyles} />
+                <Password componentStyles={passFormStyles} />
+                <Button componentStyles={btnStyles} />
             </div>
         )
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        componentsState: state.libraryState
-    }
-}
-
-export default connect(mapStateToProps)(Entry);
+export default Entry;

@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import "../Login.css"
 import StyleReader from "../../../../../utils/StyleReader";
-import {connect} from "react-redux";
+
 
 class Login extends Component {
     state = {
@@ -9,7 +9,7 @@ class Login extends Component {
     }
 
     render() {
-        const {componentsState, componentWithSync} = this.props;
+        const {componentStyles} = this.props;
         const condition = this.state.value === '' ? '' : 'filled'
 
         let style, label, errorUserNameMessage;
@@ -25,18 +25,10 @@ class Login extends Component {
                 errorUserNameMessage = <div className="auth_error_text">{errorText}</div>;
             }
         } else {
-            let componentStyle;
-
-            if (componentWithSync) {
-                componentStyle = componentsState && componentsState[componentWithSync];
-            } else {
-                componentStyle = componentsState && componentsState["Login"];
-            }
-
-            const styleReader = new StyleReader(componentStyle);
+            const styleReader = new StyleReader(componentStyles);
             style = styleReader.style
 
-            label = componentStyle.text || "Password";
+            label = componentStyles.text || "Login";
         }
 
         return (
@@ -74,10 +66,4 @@ class Login extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        componentsState: state.libraryState
-    }
-}
-
-export default connect(mapStateToProps)(Login);
+export default Login;

@@ -1,7 +1,7 @@
 import React from 'react';
-import '../assets/css/Workspace.scss'
-import * as components from "../utils/Hub"
+import '../assets/css/Workspace.scss';
 import ControlCenter from "./ControlCenter/ControlCenter";
+import ComponentCaller from "./ComponentCaller";
 import ThemeContext from "./ThemeControl/ThemeContext";
 import {connect} from "react-redux";
 
@@ -13,20 +13,16 @@ class Workspace extends React.Component {
         const {componentName} = this.props;
 
         const themeContext = this.context.theme;
-        // исходя из переданного пропсом имени выбирается текущий компонент для отображения
-        const Component = components[componentName];
 
         // проверка на то, открыт ли компонент
-        const currentComponent = componentName && <Component />
+        const currentComponent = componentName && <ComponentCaller />
         // аналогично
         const currentMenu = componentName && <ControlCenter resetStyles={this.resetStyles}/>;
 
         return (
             <div className={`workspace workspace_${themeContext}`}>
                 <div className="workspace__inner">
-                    <div className="workspace__content">
-                        {currentComponent}
-                    </div>
+                    {currentComponent}
                     {currentMenu}
                 </div>
             </div>

@@ -3,10 +3,11 @@
 
   display: flex;
   justify-content: flex-start;
+  align-items: center;
 }
 
 .form__label {
-  width: 150px;
+  width: 170px;
 
   font-size: 16px;
   font-weight: 700;
@@ -18,6 +19,7 @@
 
   display: flex;
   justify-content: flex-start;
+  flex-direction: column;
 }
 
 .form__number {
@@ -87,13 +89,40 @@
 }
 
 .form__textarea {
-  width: 370px;
+  width: 300px;
+  min-width: 160px;
+  height: 35px;
+  min-height: 35px;
+
+  overflow: auto;
+  padding: 7px;
+  outline: none;
+  border-radius: 6px;
+  border:0;
+  box-shadow:4px 4px 10px rgba(0,0,0,0.06);
+}
+
+.form__input {
+  width: 160px;
   height: 35px;
 
   overflow: auto;
   padding: 7px;
   outline: none;
-  border-radius: 10px;
+  border-radius: 6px;
   border:0;
   box-shadow:4px 4px 10px rgba(0,0,0,0.06);
+}
+
+.form__error_text {
+  color: #ff4c64;
+  font-size: 14px;
+}
+
+.form__input_error {
+  border: 2px solid #ff4c64;
+}
+
+.form__input_error:focus {
+  border: 2px solid #ff4c64;
 }

@@ -1,31 +1,31 @@
 import React, {Component} from "react";
 import StyleReader from "../../../../utils/StyleReader";
 import styled from "styled-components";
-import "./Outline.css"
-import {connect} from "react-redux";
+import "./Outline.css";
 
 
 class Outline extends Component {
     render() {
-        const {componentsState} = this.props;
-        const componentStyle = componentsState && componentsState["Outline"];
-        const text = componentStyle.text || "Scooby Doo";
-        const styleReader = new StyleReader(componentStyle);
+        const {componentStyles} = this.props;
+        const text = componentStyles.text || "Scooby Doo";
 
-        const mainColor = componentStyle['bc'] || "#0071f0";
+        const styleReader = new StyleReader(componentStyles);
+        const style = styleReader.style;
+
+        const mainColor = componentStyles['bc'] || "#0071f0";
         const Button = styled.button`
           background: none;
           border: ${mainColor} solid 3px;
           color: ${mainColor};
           &:hover {
             background: ${mainColor};
-            color: ${componentStyle['clh'] || '#fff'};
+            color: ${componentStyles['clh'] || '#fff'};
           }
         `;
 
         return (
             <Button className={this.props.className + " outline-btn"}
-                    style={styleReader.style}
+                    style={style}
                     onClick={ e => this.handleClick(e) }>
                 {text}
             </Button>
@@ -37,10 +37,4 @@ class Outline extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        componentsState: state.libraryState
-    }
-}
-
-export default connect(mapStateToProps)(Outline);
+export default Outline;

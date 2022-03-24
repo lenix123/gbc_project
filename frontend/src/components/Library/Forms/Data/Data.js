@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import "./Data.css";
 import StyleReader from "../../../../utils/StyleReader";
-import {connect} from "react-redux";
 import {dataKeyDown, dataPaste, maskForData} from "./mask";
 
 
@@ -12,19 +11,20 @@ class Data extends Component {
     }
 
     render() {
-        const {componentsState, className, formMask, formPlaceholder, id} = this.props;
-        const componentStyle = componentsState && componentsState["Data"];
-        let styleReader = new StyleReader(componentStyle);
+        const {componentStyles, className, formMask, formPlaceholder, id} = this.props;
 
-        const mask = formMask || componentStyle["mask"] || "99/99/9999";
-        const placeholder = formPlaceholder || componentStyle["text"] || "Data";
+        const styleReader = new StyleReader(componentStyles);
+        const style = styleReader.style;
+
+        const mask = formMask || componentStyles["mask"] || "99/99/9999";
+        const placeholder = formPlaceholder || componentStyles["text"] || "Data";
 
         return (
             <input type="text"
                    id={id}
                    placeholder={placeholder}
                    className={className + " dataInput"}
-                   style={styleReader.style}
+                   style={style}
                    data-mask={mask}
                    onChange={this.handleChange}
                    onKeyDown={this.onDataKeyDown}
@@ -60,10 +60,4 @@ class Data extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        componentsState: state.libraryState
-    }
-}
-
-export default connect(mapStateToProps)(Data);
+export default Data;

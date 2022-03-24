@@ -1,6 +1,7 @@
 .login__group {
     position: relative;
     margin-bottom: 32px;
+    max-width: 300px;
     width: 100%;
 }
 

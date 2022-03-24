@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import "../Login.css"
 import StyleReader from "../../../../../utils/StyleReader";
-import {connect} from "react-redux";
 
 class Email extends Component {
     state = {
@@ -9,7 +8,7 @@ class Email extends Component {
     }
 
     render() {
-        const {componentsState, componentWithSync} = this.props;
+        const {componentStyles} = this.props;
         const condition = this.state.value === '' ? '' : 'filled';
 
         let style, label, errorEmailMessage;
@@ -25,18 +24,10 @@ class Email extends Component {
                 errorEmailMessage = <div className="auth_error_text">{errorText}</div>;
             }
         } else {
-            let componentStyle;
+            const styleReader = new StyleReader(componentStyles);
+            style = styleReader.style;
 
-            if (componentWithSync) {
-                componentStyle = componentsState && componentsState[componentWithSync];
-            } else {
-                componentStyle = componentsState && componentsState["Email"];
-            }
-
-            const styleReader = new StyleReader(componentStyle);
-            style = styleReader.style
-
-            label = componentStyle.text || "Email";
+            label = componentStyles.text || "Email";
         }
 
         return (
@@ -74,10 +65,4 @@ class Email extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        componentsState: state.libraryState
-    }
-}
-
-export default connect(mapStateToProps)(Email);
+export default Email;

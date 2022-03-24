@@ -1,5 +1,5 @@
 import {updateObject} from "../utility";
-import {AUTH_FAIL, AUTH_LOGOUT, AUTH_START, AUTH_SUCCESS, AUTH_RESET_ERROR} from "./actions";
+import {AUTH_FAIL, AUTH_LOGOUT, AUTH_START, AUTH_SUCCESS, AUTH_RESET_ERROR, SET_OLD_TOKEN} from "./actions";
 
 const initialState = {
     token: null,
@@ -41,6 +41,12 @@ const resetError = (state, action) => {
     });
 }
 
+const setOldToken = (state, action) => {
+    return updateObject(state, {
+       token: action.token
+    });
+}
+
 export const authReducer = (state=initialState, action) => {
     switch (action.type) {
         case AUTH_START: return authStart(state, action);
@@ -48,6 +54,7 @@ export const authReducer = (state=initialState, action) => {
         case AUTH_FAIL: return authFail(state, action);
         case AUTH_LOGOUT: return authLogout(state, action);
         case AUTH_RESET_ERROR: return resetError(state, action);
+        case SET_OLD_TOKEN: return setOldToken(state, action);
         default:
             return state;
     }

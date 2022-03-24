@@ -3,40 +3,38 @@ import "./Card.css";
 import defaultImg from "./product3.jpg";
 import StyleReader from "../../../../utils/StyleReader";
 import * as components from "../../../../utils/Hub";
- import {connect} from "react-redux";
+
 
 class Card extends React.Component {
     render() {
-        const {componentsState} = this.props;
-        const componentStyle = componentsState && componentsState["Card"];
-        const description = componentStyle.text || "Lorem ipsum dolor sit amet," +
+        const {componentStyles, isUserComponent, componentsState} = this.props;
+        const description = componentStyles.text || "Lorem ipsum dolor sit amet," +
                                                  " consectetur adipisicing elit." +
                                                  " Aperiam eligendi impedit molestiae nisi.";
-        const styleReader = new StyleReader(componentStyle);
+        const styleReader = new StyleReader(componentStyles);
+        const style = styleReader.style;
         const url = styleReader.url || defaultImg;
 
-        const buttonName = componentStyle.btn || 'Classic';
-        const buttonText = componentsState[buttonName].text;
-        const Button = components[buttonName];
+        let Button, btnStyles;
+        if (isUserComponent && componentStyles.btn === "Initial") {
+            Button = components[componentStyles.initialBtn];
+            btnStyles = componentStyles["btnStyle"];
+        } else {
+            const buttonName = componentStyles.btn || 'Classic';
+            Button = components[buttonName];
+            btnStyles = componentsState[buttonName];
+        }
 
         return(
-            <div className={styleReader.userClassName + "card"} style={styleReader.style}>
+            <div className={styleReader.userClassName + "card"} style={style}>
                 <img className={"card__img"} src={url} alt="Wrong URL address"/>
                 <p className={"card__description"}>
                     {description}
                 </p>
-                <Button componentsState={componentsState} className={'card__button'}>
-                    {buttonText}
-                </Button>
+                <Button componentStyles={btnStyles} className={'card__button'} />
             </div>
         )
     }
 }
 
- const mapStateToProps = (state) => {
-     return {
-         componentsState: state.libraryState
-     }
- }
-
-export default connect(mapStateToProps)(Card);
+export default Card;

@@ -2,7 +2,6 @@ import React, {Component} from "react";
 import "./BankCard.css";
 import StyleReader from "../../../../utils/StyleReader";
 import Data from "../Data/Data";
-import {connect} from "react-redux";
 
 class BankCard extends Component {
     state = {
@@ -10,13 +9,19 @@ class BankCard extends Component {
     }
 
     render() {
-        const {componentsState} = this.props;
-        const componentStyle = componentsState && componentsState["BankCard"];
-        const styleReader = new StyleReader(componentStyle);
-        const defaultText = componentStyle.text || 'Lenix Bank'
+        const {componentStyles, isUserComponent, componentsState} = this.props;
+        const defaultText = componentStyles.text || 'Lenix Bank';
+        const styleReader = new StyleReader(componentStyles);
         let CardStyle = styleReader.style;
         CardStyle['background'] = CardStyle['background'];
         CardStyle['color'] = CardStyle['color'];
+
+        let dataStyle;
+        if (isUserComponent) {
+            dataStyle = componentStyles.dataStyle;
+        } else {
+            dataStyle = componentsState["Data"];
+        }
 
         return (
             <div className={"bankCard"} style={CardStyle}>
@@ -27,22 +32,26 @@ class BankCard extends Component {
                     <Data className={"bankCard__number__form"}
                           id={"card-number"}
                           formMask={"9999-9999-9999-9999"}
-                          formPlaceholder={"Card number"} />
+                          formPlaceholder={"Card number"}
+                          componentStyles={dataStyle} />
                 </div>
                 <div className={"bankCard__lower"}>
                     <div className="bankCard__lower__forms">
                         <div className={"bankCard__period"}>
                             <Data className={"bankCard__month"}
                                   formMask={"99"}
-                                  formPlaceholder={"MM"}/>
+                                  formPlaceholder={"MM"}
+                                  componentStyles={dataStyle} />
                             <p className={"bankCard__splitter"}>/</p>
                             <Data className={"bankCard__year"}
                                   formMask={"99"}
-                                  formPlaceholder={"YY"}/>
+                                  formPlaceholder={"YY"}
+                                  componentStyles={dataStyle} />
                         </div>
                         <Data className={"bankCard__code"}
                               formMask={"999"}
-                              formPlaceholder={"Code"}/>
+                              formPlaceholder={"Code"}
+                              componentStyles={dataStyle} />
                     </div>
                 </div>
             </div>
@@ -50,10 +59,4 @@ class BankCard extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        componentsState: state.libraryState
-    }
-}
-
-export default connect(mapStateToProps)(BankCard);
+export default BankCard;

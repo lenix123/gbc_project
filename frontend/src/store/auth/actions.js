@@ -5,6 +5,7 @@ export const AUTH_SUCCESS = "AUTH_SUCCESS";
 export const AUTH_FAIL = "AUTH_FAIL";
 export const AUTH_LOGOUT = "AUTH_LOGOUT";
 export const AUTH_RESET_ERROR = "AUTH_RESET_ERROR";
+export const SET_OLD_TOKEN = "SET_OLD_TOKEN";
 
 
 export const authStart = () => {
@@ -28,7 +29,7 @@ export const authFail = error => {
 }
 
 export const logout = () => {
-    localStorage.removeItem('user');
+    localStorage.removeItem('token');
     localStorage.removeItem('expirationDate');
     return {
         type: AUTH_LOGOUT
@@ -38,6 +39,13 @@ export const logout = () => {
 export const resetError = () => {
     return {
         type: AUTH_RESET_ERROR
+    }
+}
+
+export const setOldToken = (token) => {
+    return{
+        type: SET_OLD_TOKEN,
+        token: token
     }
 }
 
@@ -93,7 +101,7 @@ export const authCheckState = () => {
     return dispatch => {
         const token = localStorage.getItem('token');
 
-        if(token === undefined) {
+        if (token === undefined) {
             dispatch(logout());
         } else {
             const expirationDate = new Date(localStorage.getItem('expirationDate'));

@@ -4,7 +4,7 @@ import StyleReader from "../../../../../utils/StyleReader";
 import {phoneinput} from "./phoneinput";
 import {phoneKeyDown} from "./phoneinput";
 import {phonePaste} from "./phoneinput";
-import {connect} from "react-redux";
+
 
 class Telephone extends Component {
     state = {
@@ -12,25 +12,22 @@ class Telephone extends Component {
     }
 
     render() {
-        const {componentsState, componentWithSync} = this.props;
-        const condition = this.state.value === '' ? '' : 'filled'
-        let componentStyle;
+        const {componentStyles} = this.props;
+        const condition = this.state.value === '' ? '' : 'filled';
 
-        if (componentWithSync) {
-            componentStyle = componentsState && componentsState[componentWithSync];
-        } else {
-            componentStyle = componentsState && componentsState["Telephone"];
-        }
+        let style, label;
 
-        const styleReader = new StyleReader(componentStyle);
-        const label = this.props.children || componentStyle.text || "Telephone";
+        const styleReader = new StyleReader(componentStyles);
+        style = styleReader.style
+
+        label = componentStyles.text || "Telephone";
 
         return (
-            <form className={styleReader.userClassName + "login__group"}>
+            <form className={"login__group"}>
                 <input type="tel"
                        id={"data-tel-input"}
                        className={"login__input"}
-                       style={styleReader.style}
+                       style={style}
                        placeholder=''
                        onChange={this.handleChange}
                        onPaste={this.onPhonePaste}
@@ -64,10 +61,4 @@ class Telephone extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        componentsState: state.libraryState
-    }
-}
-
-export default connect(mapStateToProps)(Telephone);
+export default Telephone;

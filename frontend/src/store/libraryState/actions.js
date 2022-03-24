@@ -14,3 +14,4 @@ export const resetComponentStyles = (componentName) => ({
     type: RESET_COMPONENT_STYLES,
     payload: componentName
 })
+

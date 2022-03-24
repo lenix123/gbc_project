@@ -3,6 +3,8 @@ import '../../assets/css/App-menu/Sidebar.scss';
 import tree from '../../tree.json';
 import DirBtn from "./DirBtn";
 import userTreeBuilder from "../../utils/userTree";
+import {connect} from "react-redux";
+import {setUserComponents} from "../../store/currentComponent/actions";
 
 // компонент Sidebar отвечает за навигацию в приложении
 class Sidebar extends Component {
@@ -11,12 +13,16 @@ class Sidebar extends Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        const userComponents = this.props.userComponents;
-        if (this.props !== prevProps && userComponents.length) {
-            const userTree = userTreeBuilder(userComponents);
-            this.setState({
-                userTree: userTree,
-            })
+        if (prevProps !== this.props) {
+            const userComponents = this.props.userComponents;
+            if (this.props !== prevProps && userComponents.length) {
+                const userTree = userTreeBuilder(userComponents);
+                this.setState({
+                    userTree: userTree[0],
+                })
+
+                this.props.setUserComponents(userTree[1]);
+            }
         }
     }
 
@@ -43,5 +49,8 @@ class Sidebar extends Component {
     }
 }
 
+const mapDispatchToProps = {
+    setUserComponents
+}
 
-export default Sidebar
+export default connect(null, mapDispatchToProps)(Sidebar);

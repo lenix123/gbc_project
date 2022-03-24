@@ -6,7 +6,7 @@ import ColorForm from "./InputForms/ColorForm";
 
 // FormTemplate - шаблон, в зависимости от пропсов которого, выбирается нужная форма
 function FormTemplate(props) {
-    const {styleType, getStyles, componentStyle} = props;
+    const {styleType, isUserComponent} = props;
     let form;
 
     // по типу (стилю) формы выбирает нужную из списка
@@ -70,14 +70,22 @@ function FormTemplate(props) {
             break;
         // тип ввода формы
         case 'type':
-            const types = ["Email", "Telephone", "Login"];
+            let types = ["Email", "Telephone", "Login"];
+            if (isUserComponent) {
+                types.unshift("Initial");
+            }
+
             form = <DropdownForm label={"Type"}
                                  elements={types}
                                  styleType={'type'}/>
             break;
         // выбор кнокпи компонента
         case 'btn':
-            const buttons = ["Classic", "Waves", "Outline"];
+            let buttons = ["Classic", "Waves", "Outline"];
+            if (isUserComponent) {
+                buttons.unshift("Initial");
+            }
+
             form = <DropdownForm label={"Button"}
                                  elements={buttons}
                                  styleType={'btn'}/>
