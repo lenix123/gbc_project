@@ -8,7 +8,7 @@ import {connect} from "react-redux";
 // то есть теста инструкции и кнопки "копировать"
 class Instruction extends React.Component {
     render() {
-        const {type, componentName, componentsState} = this.props;
+        const {type, componentName, userComponentName, componentsState, userLibrary} = this.props;
         let text;
 
         if (type === "import") {
@@ -29,7 +29,7 @@ class Instruction extends React.Component {
             }
         } else if (type === "tag") {
             // формируем инструкцию по вызову компонента
-            text = textBuilder(componentName, componentsState);
+            text = textBuilder(componentName, userComponentName, componentsState, userLibrary);
             // заменяем все символы табуляции на 4 пробела,
             // так код выглядит лучше
             text = text.replaceAll(/\t/g, "    ");
@@ -51,7 +51,9 @@ class Instruction extends React.Component {
 const mapStateToProps = (state) => {
     return {
         componentName: state.currentComponent.componentName,
-        componentsState: state.libraryState
+        userComponentName: state.currentComponent.userComponentName,
+        componentsState: state.libraryState,
+        userLibrary: state.userLibrary,
     }
 }
 

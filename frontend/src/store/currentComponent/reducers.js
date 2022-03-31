@@ -4,7 +4,7 @@ const defaultState = {
     componentName: "",
     isUserComponent: false,
     userComponentName: "",
-    userComponents: [],
+    userComponents: {},
 };
 
 export const currentComponentReducer = (state = defaultState, action) => {

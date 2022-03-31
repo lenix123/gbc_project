@@ -1,4 +1,4 @@
- import React from "react";
+import React from "react";
 import "./Card.css";
 import defaultImg from "./product3.jpg";
 import StyleReader from "../../../../utils/StyleReader";

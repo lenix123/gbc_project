@@ -4,7 +4,7 @@ import tree from '../../tree.json';
 import DirBtn from "./DirBtn";
 import userTreeBuilder from "../../utils/userTree";
 import {connect} from "react-redux";
-import {setUserComponents} from "../../store/currentComponent/actions";
+import {setComponentName, setUserComponents} from "../../store/currentComponent/actions";
 
 // компонент Sidebar отвечает за навигацию в приложении
 class Sidebar extends Component {
@@ -20,8 +20,16 @@ class Sidebar extends Component {
                 this.setState({
                     userTree: userTree[0],
                 })
-
                 this.props.setUserComponents(userTree[1]);
+            } else if (this.props !== prevProps && userComponents.length === 0) {
+                this.setState({
+                    userTree: {}
+                });
+                this.props.setUserComponents({});
+            }
+
+            if (userComponents.length < prevProps.userComponents.length) {
+                this.props.setComponentName("", false, "");
             }
         }
     }
@@ -50,7 +58,8 @@ class Sidebar extends Component {
 }
 
 const mapDispatchToProps = {
-    setUserComponents
+    setUserComponents,
+    setComponentName
 }
 
 export default connect(null, mapDispatchToProps)(Sidebar);

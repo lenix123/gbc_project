@@ -54,7 +54,10 @@ function Signup(props) {
     const [pass2ErrorText, setPass2ErrorText] = useState("");
     useEffect(() => {
         if (subscribedFields.includes("password2")) {
-            const errorText = matchPassValid(password1, password2);
+            let errorText = matchPassValid(password1, password2);
+            if (errorText === "") {
+                errorText = passwordsValid(password2);
+            }
             setPass2ErrorText(errorText);
         }
     }, [password2, subscribedFields]);
@@ -66,7 +69,7 @@ function Signup(props) {
         if (props.isAuthenticated) {
             navigate("/");
         } else if (error !== null && error.response.status === 400) {
-            const errors = JSON.parse(error.request.response)
+            const errors = JSON.parse(error.request.response);
 
             for (let field of Object.keys(errors)) {
                 // take just the first error

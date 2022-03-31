@@ -5,6 +5,8 @@ import {appThemeReducer} from "./appTheme/reducers";
 import {userLibraryReducer} from "./userLibrary/reducers";
 import {authReducer} from "./auth/reducers"
 import {userComponentNameReducer} from "./componentNameForm/reducers";
+import {createdUserComponentReducer} from "./createBtn/reducers";
+import {notificationsReducer} from "./notifications/reducers";
 
 
 export default combineReducers({
@@ -14,4 +16,6 @@ export default combineReducers({
     userLibrary: userLibraryReducer,
     auth: authReducer,
     userComponentName: userComponentNameReducer,
+    createBtn: createdUserComponentReducer,
+    notifications: notificationsReducer
 })

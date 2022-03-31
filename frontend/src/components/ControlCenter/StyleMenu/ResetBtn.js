@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import '../../../assets/css/ControlCenter/ResetBtn.scss';
-import { faTrashAlt, faCheck } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faEraser } from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {resetComponentStyles} from "../../../store/libraryState/actions";
 import {resetUserComponentStyles} from "../../../store/userLibrary/actions";
@@ -15,7 +15,7 @@ class ResetBtn extends Component {
     render () {
         const condition = this.isActive() ? 'active' : 'false';
         // иконки корзины и галочки кнопки
-        const trashIcon = <FontAwesomeIcon className={`reset-btn__trash-icon`} icon={faTrashAlt}/>
+        const trashIcon = <FontAwesomeIcon className={`reset-btn__trash-icon`} icon={faEraser}/>
         const checkIcon = <FontAwesomeIcon className={`reset-btn__check-icon`} icon={faCheck}/>
 
         return (

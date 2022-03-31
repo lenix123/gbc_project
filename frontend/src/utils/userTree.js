@@ -5,14 +5,14 @@ export default function userTreeBuilder(userComponents) {
         Forms: {dirs: new Set(), files: []},
         Authorization: {dirs: new Set(), files: []}};
 
-    let userComponentsList = [];
+    let userComponentsList = {};
 
     for (let component of userComponents) {
         const type = component.type;
         const prototype = component.prototype;
         const userComponentName = component.component_name;
 
-        userComponentsList.push(userComponentName);
+        userComponentsList[userComponentName] = component.pk;
 
         if (type === "Authorization") {
             userTree.Forms.dirs.add("Authorization");

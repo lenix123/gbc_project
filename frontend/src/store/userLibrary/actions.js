@@ -1,6 +1,7 @@
 export const SET_USER_LIBRARY = "TAKE_USER_LIBRARY";
 export const CHANGE_USER_COMPONENT_STYLE = "CHANGE_USER_COMPONENT_STYLE";
 export const RESET_USER_COMPONENT_STYLES = "RESET_USER_COMPONENT_STYLES";
+export const UPDATE_USER_COMPONENT = "UPDATE_USER_COMPONENT";
 
 export const setUserLibrary = (userComponents) => ({
     type: SET_USER_LIBRARY,
@@ -20,3 +21,12 @@ export const resetUserComponentStyles = (componentName) => ({
     type: RESET_USER_COMPONENT_STYLES,
     payload: componentName,
 });
+
+export const updateUserComponent = (userComponent, componentStyles) => ({
+    type: UPDATE_USER_COMPONENT,
+    payload: {
+        userComponent,
+        componentStyles
+    }
+});
+

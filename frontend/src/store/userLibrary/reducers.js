@@ -1,4 +1,9 @@
-import {CHANGE_USER_COMPONENT_STYLE, RESET_USER_COMPONENT_STYLES, SET_USER_LIBRARY} from "./actions";
+import {
+    CHANGE_USER_COMPONENT_STYLE,
+    RESET_USER_COMPONENT_STYLES,
+    SET_USER_LIBRARY,
+    UPDATE_USER_COMPONENT
+} from "./actions";
 
 const defaultState = {};
 const defaultUserLibrary = {};
@@ -35,6 +40,12 @@ export const userLibraryReducer = (state = defaultState, action) => {
                 ...state,
                 [componentToReset]: resetStyles
             }
+
+        case UPDATE_USER_COMPONENT:
+            const {userComponent, componentStyles} = action.payload;
+            defaultUserLibrary[userComponent] = Object.assign({}, componentStyles);
+
+            return defaultState;
 
         default:
             return state;

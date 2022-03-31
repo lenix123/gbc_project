@@ -6,10 +6,11 @@ import {connect} from "react-redux";
 function ComponentNameForm(props) {
     const [currentComponent, setCurrentComponent] = useState("");
     useEffect(() => {
-        const {userComponentName, componentName} = props;
+        const {userComponentName, componentName, userComponentsList} = props;
         let component;
+        // if it is a user's component take the unique id
         if (userComponentName !== "") {
-            component = userComponentName;
+            component = userComponentName + userComponentsList[userComponentName];
         } else {
             component = componentName;
         }
@@ -67,6 +68,7 @@ const mapStateToProps = (state) => {
     return {
         error: state.userComponentName.errorText,
         namesForComponents: state.userComponentName.namesForComponents,
+        userComponentsList: state.currentComponent.userComponents,
         componentName: state.currentComponent.componentName,
         userComponentName: state.currentComponent.userComponentName
     }

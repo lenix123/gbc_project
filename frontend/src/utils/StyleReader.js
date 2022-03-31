@@ -117,12 +117,11 @@ class StyleReader {
     // строит значение атрибута className, регулирующего стиль компонента
     _buildClassName(componentStyle) {
         let className = '';
+        const exceptions =
+            ["text", "btn", "url", "btnStyle", "initialBtn", "dataStyle", "initialLogin", "loginStyle", "passStyle"];
 
         for (let style in componentStyle) {
-            if (
-                style !== 'text' &&
-                style !== 'btn' &&
-                style !== 'url' &&
+            if (!exceptions.includes(style) &&
                 componentStyle.hasOwnProperty(style) &&
                 componentStyle[style] !== ''
             ) {

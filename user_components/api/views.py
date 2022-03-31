@@ -1,12 +1,12 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from django.http import Http404
 from .serializers import UserComponentsSerializer, CreateUserComponent
 from ..models import UserComponent
 from rest_framework import status
 
 
 class UserComponentList(APIView):
-
     def get(self, request):
         if self.request.user.is_authenticated:
             user_components = UserComponent.objects.filter(user=request.user)
@@ -15,13 +15,36 @@ class UserComponentList(APIView):
         serializer = UserComponentsSerializer(user_components, many=True)
         return Response(serializer.data)
 
-
     def post(self, request):
-        serializer = CreateUserComponent(data=request.data)
+        serializer = CreateUserComponent(data=request.data, context={'request': request})
         if serializer.is_valid():
             serializer.save(user=self.request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-    # def perform_create(self, serializer):
+class UserComponentDetail(APIView):
+    def get_object(self, pk):
+        try:
+            return UserComponent.objects.get(pk=pk)
+        except UserComponent.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk):
+        user_component = self.get_object(pk)
+        serializer = UserComponentsSerializer(user_component)
+        return Response(serializer.data)
+
+    def put(self, request, pk):
+        user_component = self.get_object(pk)
+        serializer = CreateUserComponent(user_component, request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk):
+        user_component = self.get_object(pk)
+        user_component.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+

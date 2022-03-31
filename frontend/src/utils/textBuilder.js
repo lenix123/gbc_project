@@ -1,85 +1,117 @@
 import StyleReader from "./StyleReader";
 
 // функция textBuilder строит текст для вывода на сайте в разделе "Export"
-export default function textBuilder(componentName, componentsState) {
+export default function textBuilder(componentName, userComponentName, componentsState, userLibrary) {
     let text;
 
     const buttons = ["Classic", "Outline", "Waves"];
     const authorization = ["Login", "Email", "Telephone", "Password"];
 
+    let currentComponent, currentLibrary;
+    if (userComponentName !== "") {
+        currentComponent = userComponentName;
+        currentLibrary = userLibrary;
+    } else {
+        currentComponent = componentName;
+        currentLibrary = componentsState;
+    }
+
     if (buttons.includes(componentName)) {
-        text = tagBuilder(componentName, componentsState[componentName]);
+        text = tagBuilder(componentName, currentLibrary[currentComponent]);
     } else if (authorization.includes(componentName)) {
-        const isSimple = true;
-        text = AuthorizationText(componentName, componentsState, isSimple);
+        text = tagBuilder(componentName, currentLibrary[currentComponent]);
     } else if (componentName === "Data") {
         const replaceParams = ["mask"];
         const additionalProp = ["mask"];
-        text = tagBuilder("Data", componentsState["Data"], additionalProp, replaceParams);
+        text = tagBuilder("Data", currentLibrary["Data"], additionalProp, replaceParams);
     } else if (componentName === "Card") {
-        text = CardText(componentsState);
+        text = CardText(userComponentName, componentsState, userLibrary);
     } else if (componentName === "Entry") {
-        text = EntryText(componentsState);
+        text = EntryText(userComponentName, componentsState, userLibrary);
     } else if (componentName === "BankCard") {
-        text = BankCardText(componentsState);
+        text = BankCardText(currentLibrary);
     }
 
     return text;
 }
 
 
-function AuthorizationText(formName, componentsState, isSimple) {
-    let componentStyle = componentsState[formName];
-
-    // делаем синхранизацию стилей для форм из Entry
-    if (!isSimple) {
-        const sync = componentsState["Entry"].sync;
-        if (sync === "Login") {
-            // берём стили выбранной формы из состояния Entry
-            const typeForm = componentsState["Entry"].type || "Email";
-            componentStyle = componentsState[typeForm];
-        } else if (sync === "Pass") {
-            // синхронизируем стили с формой "Password"
-            componentStyle = componentsState["Password"];
-        }
+function CardText(userComponentName, componentsState, userLibrary) {
+    let componentStyle;
+    if (userComponentName !== "") {
+        componentStyle = userLibrary[userComponentName];
+    } else {
+        componentStyle = componentsState["Card"];
     }
 
-    return tagBuilder(formName, componentStyle);
-}
-
-
-function CardText(componentsState) {
-    const componentStyle = componentsState["Card"];
+    let Button, buttonStyle;
+    if (componentStyle.btn === "Initial") {
+        Button = componentStyle.initialBtn;
+        buttonStyle = componentStyle.btnStyle;
+    } else {
+        Button = componentStyle.btn || "Classic";
+        buttonStyle = componentsState[Button];
+    }
     const componentText = componentStyle.text ? '\n\t' + componentStyle.text : '';
-
-    const Button = componentStyle.btn || "Classic";
 
     const replaceParams = ["src"];
     const additionalProp = ["src"];
     const propsText = propsBuilder(componentStyle, replaceParams, additionalProp);
 
-    const buttonCode = tagBuilder(Button, componentsState[Button]);
+    const buttonCode = tagBuilder(Button, buttonStyle);
 
     return `<Card${propsText}>${componentText}\n\t${buttonCode}\n</Card>`;
 }
 
 
-function EntryText(componentsState) {
-    const componentStyle = componentsState["Entry"];
-    const componentText = componentStyle.text ? '\n\t' + componentStyle.text : '';
+function EntryText(userComponentName, componentsState, userLibrary) {
+    let componentStyle;
+    if (userComponentName !== "") {
+        componentStyle = userLibrary[userComponentName];
+    } else {
+        componentStyle = componentsState["Card"];
+    }
 
-    const Button = componentStyle.btn || "Classic";
-    const typeForm = componentStyle.type || "Email";
+    let Button, buttonStyle;
+    if (componentStyle.btn === "Initial") {
+        Button = componentStyle.initialBtn;
+        buttonStyle = componentStyle.btnStyle;
+    } else {
+        Button = componentStyle.btn || "Classic";
+        buttonStyle = componentsState[Button];
+    }
+
+    let loginFormStyles, passFormStyles, loginType;
+    if (userComponentName !== "" && componentStyle.type === "Initial") {
+        loginType = componentStyle.initialLogin;
+        loginFormStyles = componentStyle.loginStyle;
+        passFormStyles = componentStyle.passStyle;
+    } else {
+        loginType = componentStyle.type || "Email";
+        loginFormStyles = componentsState[loginType];
+        if (userComponentName !== "") {
+            passFormStyles = componentStyle.passStyle;
+        } else {
+            passFormStyles = componentsState["Password"];
+        }
+    }
+
+    const sync = componentStyle.sync;
+    if (sync === "Login") {
+        passFormStyles = loginFormStyles;
+    } else if (sync === "Pass") {
+        loginFormStyles = passFormStyles;
+    }
+    const componentText = componentStyle.text ? '\n\t' + componentStyle.text : '';
 
     const replaceParams = ["btn", "type", "sync"];
     const propsText = propsBuilder(componentStyle, replaceParams);
 
-    const isSimple = false;
-    const Login = AuthorizationText(typeForm, componentsState, isSimple);
+    const Login = tagBuilder(loginType, loginFormStyles);
     // второе поле в Entry всегда является паролем, поэтому оно отличается только типом
-    const Pass = AuthorizationText("Password", componentsState, isSimple);
+    const Pass = tagBuilder("Password", passFormStyles);
 
-    const buttonCode = tagBuilder(Button, componentsState[Button]);
+    const buttonCode = tagBuilder(Button, buttonStyle);
 
     return `<Entry${propsText}>${componentText}\n\t${Login}\n\t${Pass}\n\t${buttonCode}\n</Entry>`;
 }
@@ -90,11 +122,17 @@ function BankCardText(componentsState) {
     const componentText = componentStyle.text ? '\n\t' + componentStyle.text : '';
 
     const propsText = propsBuilder(componentStyle);
+    let dataStyle;
+    if (componentStyle.dataStyle !== undefined) {
+        dataStyle = componentStyle.dataStyle;
+    } else {
+        dataStyle = componentsState["Data"];
+    }
 
-    const CardNumber = CardForm(componentsState["Data"], "Card Number", "cardNumber");
-    const Month = CardForm(componentsState["Data"], "MM", "period");
-    const Year = CardForm(componentsState["Data"], "YY", "period");
-    const CVV = CardForm(componentsState["Data"], "CVV", "code");
+    const CardNumber = CardForm(dataStyle, "Card Number", "cardNumber");
+    const Month = CardForm(dataStyle, "MM", "period");
+    const Year = CardForm(dataStyle, "YY", "period");
+    const CVV = CardForm(dataStyle, "CVV", "code");
 
     return `<BankCard${propsText}>${componentText}\n\t${CardNumber}\n\t${Month}\n\t${Year}\n\t${CVV}\n</BankCard>`
 }
@@ -110,7 +148,7 @@ function CardForm(componentStyle, placeholder, formType) {
     } else if (formType === "period") {
         propsText = ' mask="99"' + propsText;
     } else if (formType === "code") {
-        propsText = ' mask="999"';
+        propsText = ' mask="999"' + propsText;
     }
 
     return `<Data${propsText}>${placeholder}</Data>`

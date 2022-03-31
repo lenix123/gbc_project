@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import '../../../assets/css/ControlCenter/InputForms.scss';
-import CreateBtn from "./CreateBtn";
 import ComponentNameForm from "./componentNameForm";
 import FormTemplate from './Forms/FormTemplate';
 import ResetBtn from "./ResetBtn";
+import Dropdown from "./DropdownBtns/Dropdown";
 import {connect} from "react-redux";
 
 
 // StyleMenu отвечает за меню стилевых форм
 class StyleMenu extends Component {
     render () {
-        const {defaultLibrary, userLibrary, componentName, token, isUserComponent, userComponentName} = this.props;
+        const {defaultLibrary, componentName, token, isUserComponent} = this.props;
         const componentStyle = defaultLibrary[componentName];
         let formsList = [];
 
@@ -24,15 +24,10 @@ class StyleMenu extends Component {
             }
         }
 
-        const createBtn = token !== null ? <CreateBtn token={token}
-                                                      componentName={componentName}
-                                                      userComponentName={userComponentName}
-                                                      userLibrary={userLibrary}
-                                                      defaultLibrary={defaultLibrary}/> : "";
+        const isAuthorised = token !== null;
 
-        const componentNameForm = token !== null ? <ComponentNameForm /> : "";
-        // formsList.unshift(componentNameForm);
-
+        const componentNameForm = isAuthorised ? <ComponentNameForm /> : "";
+        const ActionsDropdown = isAuthorised ? <Dropdown /> : "";
         // рендерит формы и кнопку сброса стилей
         return (
             <div className="control-menu">
@@ -40,9 +35,9 @@ class StyleMenu extends Component {
                     {componentNameForm}
                     {formsList}
                 </div>
-                <div>
+                <div className="control-menu__buttons">
                     <ResetBtn/>
-                    {createBtn}
+                    {ActionsDropdown}
                 </div>
             </div>
         )
@@ -53,9 +48,7 @@ const mapStateToProps = (state) => {
     return {
         componentName: state.currentComponent.componentName,
         isUserComponent: state.currentComponent.isUserComponent,
-        userComponentName: state.currentComponent.userComponentName,
         defaultLibrary: state.libraryState,
-        userLibrary: state.userLibrary,
         token: state.auth.token
     }
 }

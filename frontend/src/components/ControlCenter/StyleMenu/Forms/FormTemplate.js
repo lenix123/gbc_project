@@ -111,6 +111,9 @@ function FormTemplate(props) {
         case 'url':
             form = <TextForm label={"Image URL"}
                              styleType={'url'}/>
+            break;
+        default:
+            break;
         }
 
     return (

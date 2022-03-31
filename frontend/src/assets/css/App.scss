@@ -15,3 +15,32 @@
   display: flex;
   flex-direction: column;
 }
+
+.notification {
+  position: fixed;
+  top: 2vh;
+  left: 50%;
+  z-index: 13;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 350px;
+  min-height: 50px;
+  height: max-content;
+
+  border-radius: 5px;
+  font-size: 19px;
+  text-align: center;
+}
+
+.notification-error {
+  background: #f8d7da;
+  border: 1px solid #f5c2c7;
+  color: #842029;
+}
+
+.notification-success {
+  background: #d1e7dd;
+  border: 1px solid #badbcc;
+  color: #0f5132;
+}
