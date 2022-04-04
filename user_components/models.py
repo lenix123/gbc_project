@@ -11,3 +11,6 @@ class UserComponent(models.Model):
 
     def __str__(self):
         return self.component_name
+
+    class Meta:
+        ordering = ['user', 'component_name']
