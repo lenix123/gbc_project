@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../Authorization/.idea/Authorization.iml" filepath="$PROJECT_DIR$/../Authorization/.idea/Authorization.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/GBC.iml" filepath="$PROJECT_DIR$/.idea/GBC.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../authorization/.idea/authorization.iml" filepath="$PROJECT_DIR$/../authorization/.idea/authorization.iml" />
       <module fileurl="file://$USER_HOME$/programs/pythonProjects/PycharmProjects/pythonProject/diary_site/.idea/diary_site.iml" filepath="$USER_HOME$/programs/pythonProjects/PycharmProjects/pythonProject/diary_site/.idea/diary_site.iml" />
       <module fileurl="file://$USER_HOME$/programs/pythonProjects/PycharmProjects/pythonProject/lil_django/.idea/lil_django.iml" filepath="$USER_HOME$/programs/pythonProjects/PycharmProjects/pythonProject/lil_django/.idea/lil_django.iml" />
     </modules>
